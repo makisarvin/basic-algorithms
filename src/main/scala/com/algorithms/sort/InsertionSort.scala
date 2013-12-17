@@ -72,6 +72,6 @@ object InsertionSort {
       case _ => sorted :+ item
     }
 
-    lst.foldLeft(List.empty[T])(insert(_,_))
+    lst.foldLeft(List.empty[T])((ls,item) => insert(ls,item))
   }
 }
