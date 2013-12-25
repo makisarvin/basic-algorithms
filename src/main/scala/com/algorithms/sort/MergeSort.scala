@@ -1,56 +1,50 @@
 package com.algorithms.sort
 
+import scala.annotation.tailrec
+
 /**
- * Created by arvange on 17/12/13.
+ * Implementation of merge sort
  */
 object MergeSort {
 
-  def mergeSortArrayOfInt(arr: Array[Int]) = {
+  def mergesort[T](comp: (T, T) => Boolean)(xs: List[T]): List[T] = {
 
-    def mergeSort(low: Int, high: Int): Unit = {
-      if (low < high) {
-        val middle = low + (high - low) / 2
-        mergeSort(low, middle)
-        mergeSort(middle + 1, high)
-
-        merge(low, middle, high)
-      }
+    def merge(left: List[T], right: List[T]): List[T] = (left, right) match {
+      case (Nil, _) => right
+      case (_, Nil) => left
+      case (l :: ls, r :: rs) if comp(l,r) => l :: merge(ls, right)
+      case (l :: ls, r :: rs) if !comp(l,r) => r :: merge(left, rs)
     }
 
-    def merge( low: Int, middle: Int, high: Int) = {
-
-      val n1 = middle - low + 1
-      val n2 = high - middle
-
-      val left = new Array[Int](n1)
-      val right = new Array[Int](n2)
-
-      for (i <- 0 until n1) {
-        left(i) = arr(low + i)
-      }
-      for( j <- 0 until n2) {
-        right(j) = arr(middle + j + 1)
-      }
-      println(s"low, middle, high = $low, $middle, $high")
-      println(s"n1,n2 = ($n1,$n2)")
-      println(s"left = ${left.mkString(",")}, right=${right.mkString(",")} arr = ${arr.mkString(",")}")
-      var i = 0
-      var j = 0
-      for (k <- low until high) {
-        println(s"k=$k, i=$i and j=$j")
-        if (left(i) <= right(j)) {
-          arr(k) = left(i)
-          i += 1
-        } else {
-          arr(k) = right(j)
-          j += 1
-        }
-      }
-
+    if (xs.length < 2) xs
+    else {
+      val (left, right) = xs splitAt(xs.length / 2)
+      merge(mergesort(comp)(left), mergesort(comp)(right))
     }
 
-    mergeSort(0,arr.length)
+  }
 
+  /**
+   * Tail recursive implementation of merge.
+   * @param comp
+   * @param xs
+   * @tparam T
+   * @return
+   */
+  def msort[T](comp: (T, T) => Boolean)(xs: List[T]): List[T] = {
+    @tailrec
+    def merge(acc: List[T], left: List[T], right: List[T]): List[T] = (left, right) match {
+      case (Nil, _) => acc.reverse ::: right
+      case (_, Nil) => acc.reverse ::: left
+      case (l :: ls, r :: rs) if comp(l,r) => merge(l :: acc, ls, right)
+      case (l :: ls, r :: rs) if !comp(l,r) => merge(r :: acc, left, rs)
+    }
+
+    if (xs.length < 2) xs
+    else {
+      val (left, right) = xs splitAt(xs.length / 2)
+      merge(List(), msort(comp)(left), msort(comp)(right))
+    }
   }
 
 }
