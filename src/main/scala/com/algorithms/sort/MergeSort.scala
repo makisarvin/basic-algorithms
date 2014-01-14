@@ -25,7 +25,7 @@ object MergeSort {
   }
 
   /**
-   * Tail recursive implementation of merge.
+   * Tail recursive implementation of merge sort.
    * @param comp
    * @param xs
    * @tparam T
@@ -45,6 +45,50 @@ object MergeSort {
       val (left, right) = xs splitAt(xs.length / 2)
       merge(List(), msort(comp)(left), msort(comp)(right))
     }
+  }
+
+  /**
+   * Basic implementation of merge sort using arrays. In this by the book implementation we are copying the array
+   * into new arrays each time
+   * @param arr
+   * @return
+   */
+  def mergesortArrays(arr: Array[Int]): Array[Int] = {
+
+    def merge(left: Array[Int], right: Array[Int]): Array[Int] = {
+
+      val n = left.length + right.length
+      val resArray = Array.ofDim[Int](n)
+      var i = 0
+      var j = 0
+
+      for (k <- 0 until n) {
+
+        if (i >= left.length) {
+          resArray(k) = right(j)
+          j += 1
+        } else if ( j >= right.length ) {
+          resArray(k) = left(i)
+          i += 1
+        } else if ( left(i) < right(j) ) {
+          resArray(k) = left(i)
+          i += 1
+        }
+        else {
+          resArray(k) = right(j)
+          j += 1
+        }
+      }
+
+      resArray
+    }
+
+    if ( arr.length < 2 ) arr
+    else {
+      val (left, right) = arr splitAt( arr.length / 2)
+      merge(mergesortArrays(left), mergesortArrays(right))
+    }
+
   }
 
 }

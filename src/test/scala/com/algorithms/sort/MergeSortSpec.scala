@@ -38,4 +38,27 @@ class MergeSortSpec extends WordSpec with Matchers {
 
   }
 
+  "Merge sort Arrays" should {
+    "sort an array of integers of odd length" in {
+      val arr = Array(3,2,1,4,5)
+      mergesortArrays(arr) should equal( Array(1,2,3,4,5) )
+    }
+
+    "sort an array of integers of even length" in {
+      val arr = Array(6,3,2,1,4,5)
+      mergesortArrays(arr) should equal( Array(1,2,3,4,5,6) )
+    }
+
+    "return empty array in the case we sort the empty array" in {
+      val arr = Array.empty[Int]
+      mergesortArrays(arr) should equal (Array.empty[Int])
+    }
+
+    "return the same array in the case we sort the single value array" in {
+      val arr = Array(1)
+      mergesortArrays(arr) should equal (Array(1))
+    }
+
+  }
+
 }
