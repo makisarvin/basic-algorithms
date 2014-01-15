@@ -80,6 +80,11 @@ class MergeSortSpec extends WordSpec with Matchers {
         val xs = List(1,4,3,2,5)
         assert(countingInversions[Int](_<_)(xs) == 3)
       }
+
+      "return 0 when the list is empty" in {
+        val xs: List[Int]= List()
+        assert(countingInversions[Int](_<_)(xs) == 0)
+      }
     }
 
   }
