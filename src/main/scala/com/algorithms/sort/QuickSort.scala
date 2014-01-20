@@ -16,7 +16,6 @@ object QuickSort {
 
     def partition(array: Array[Int], start: Int, end: Int, pivot: Int): Int = {
       var i = start + 1
-      val j = start + 1
       for ( j <- start + 1 until end) {
         if (array(j) < pivot) {
           swap(array, i,j)
