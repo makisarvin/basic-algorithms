@@ -2,6 +2,21 @@ package com.algorithms.sort
 
 /**
  * Classic insertion sort algorithm in both mutable arrays form and immutable lists form.
+ * The algorithm says that:
+ *  take an element from position j (key) and move backwards until you find an element that is bigger than this key
+ *  when you find that element then move it one position up. If you reached the end of the elements or there is no
+ *  other element bigger then key then put key in the hole that is there.
+ *
+ *  For example: Suppose we have the array bellow and j is on position 6 (so key = array[6] = 4)
+ *    [1,2,3,5,6,4,7]
+ *
+ *    now move backwards. While a[i] > key, move a[i] one position up
+ *    i = 5, a[i] = 6:  [1,2,3,5, ,6,7]
+ *    i = 4. a[i] = 5:  [1,2,3, ,5,6,7]
+ *
+ *    if you reach the end or a[i] < key then put key in the empty position
+ *    i = 3, a[i] = 3: [1,2,3,4,5,6,7]
+ *
  * The  pseudo code for the algorithm is:
  *
  * insertionSort(A)
