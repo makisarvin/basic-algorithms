@@ -1,5 +1,7 @@
 package com.algorithms.numeric
 
+import scala.util.Random
+
 /**
  * Created by arvange on 03/02/14.
  */
@@ -32,14 +34,14 @@ object NumericCalculations {
    * @param exp the poser to raise to
    * @return
    */
-  def exponation(num: Int, exp: Int): Double  = {
-    def recurExponents( acc: Double, exponent: Int, until: Int): (Int, Double) = exponent match {
+  def exponation(num: Int, exp: Int): BigInt  = {
+    def recurExponents( acc: BigInt, exponent: Int, until: Int): (Int, BigInt) = exponent match {
       case x if (2 * x > until ) => (x, acc)
       case _ =>
         recurExponents(acc * acc, 2 * exponent, until)
     }
 
-    def iteration(sum: Double, until: Int): Double = {
+    def iteration(sum: BigInt, until: Int): BigInt = {
 
       val (exp, rsum) = recurExponents(num, 1, until)
 
@@ -58,5 +60,19 @@ object NumericCalculations {
       case _ => iteration(1, exp)
     }
 
+  }
+
+  /**
+   * Fermat little theorem
+   * @param prime
+   * @param attemps
+   * @return
+   */
+  def testForPrime(prime: Int, attemps: Int): Boolean = {
+    val tests = for {
+      i <- 0 until attemps
+    } yield   exponation(Random.nextInt(prime), prime-1) % prime == 1
+
+    tests.foldLeft(true)( _ && _)
   }
 }
