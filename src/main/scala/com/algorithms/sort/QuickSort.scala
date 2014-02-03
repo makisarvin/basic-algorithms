@@ -1,7 +1,7 @@
 package com.algorithms.sort
 
 /**
- * Test cases for quicksort algorithm
+ * Quicksort algorithm
  */
 object QuickSort {
 
@@ -28,10 +28,16 @@ object QuickSort {
 
   }
 
-  def swap(array: Array[Int], i: Int, j: Int) = {
+  private [this] def swap(array: Array[Int], i: Int, j: Int) = {
     val temp = array(i)
     array(i) = array(j)
     array(j) = temp
+  }
+
+  def quicksort(lst: List[Int]): List[Int] = lst match {
+    case pivot :: xs =>
+      quicksort(xs filter( _ < pivot)) ++ List(pivot) ++ quicksort(xs filter(_ > pivot))
+    case _ => lst
   }
 
 }
