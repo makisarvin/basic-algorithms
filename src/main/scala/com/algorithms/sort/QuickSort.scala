@@ -1,11 +1,33 @@
 package com.algorithms.sort
 
 /**
- * Quicksort algorithm
+ * Implementation of the quicksort algorithm. The "imparative" way uses an array of integers and performs quicksort
+ * using in place swaps.
+ * The pseudocode for the algorithm is very simple:
+ *
+ * quicksort(array, start, finish):
+ *  if end - start < 2 return array
+ *  else
+ *   pivot = selectPivot()
+ *   split_position = partition(array, start, end, pivot)
+ *   quicksort(array, start, split_position)
+ *   quicksoft(array, split_position + 1, end)
+ *
+ *
+ * Quicksort algorithm.
  */
 object QuickSort {
 
-  def qSort1(array: Array[Int], start: Int, end: Int): Unit = {
+  /**
+   * Imperative implementation of the quicksort algorithm.
+   * Note that partition is traversing the array from start until end. This means that the end element is not taken
+   * into account. (otherwise it would be to instead of until). This allows us to write qSort1(array, 0, array.length)
+   * and also in the recurcive calls we don't need to add the +1 in the split_position
+   * @param array the array to be sorted
+   * @param start should be 0
+   * @param end should be array.length
+   */
+  private[this] def qSort1(array: Array[Int], start: Int, end: Int): Unit = {
     if (end - start < 2) array
     else {
       val pivot = array(start)
@@ -28,15 +50,42 @@ object QuickSort {
 
   }
 
+  /**
+   * Swaping two alements in an array. Utility method.
+   * @param array the array
+   * @param i the position of the first element to swap
+   * @param j the position of the second element to swap
+   */
   private [this] def swap(array: Array[Int], i: Int, j: Int) = {
     val temp = array(i)
     array(i) = array(j)
     array(j) = temp
   }
 
-  def quicksort(lst: List[Int]): List[Int] = lst match {
+  /**
+   * Calls the qSort algorithms with correct parameters
+   * @param array the array to be sorted in ascending order.
+   */
+  def qSort(array: Array[Int]): Unit = {
+    qSort1(array, 0, array.length)
+  }
+
+
+  /**
+   * Functional implementation of the quicksort.
+   * For simplicity pivot is always the first element.
+   * This is a recursive function that states:
+   * While there is a pivot and something else:
+   *   filter all the elements lower than the pivot and  all the elements bigger that the pivot
+   *  Call quicksort on the array lower than the pivot and the array bigger that the pivot
+   *  add the lower than pivot sorted array, the pivot and the bigger than pivot sorted array in a list.
+   * @param lst the list to be sorted.
+   * @param f. The compare function. e.g. (_ < _) for ascending order
+   * @return the sorted list.
+   */
+  def quicksort[T](lst: List[T])(f: (T, T) => Boolean): List[T] = lst match {
     case pivot :: xs =>
-      quicksort(xs filter( _ < pivot)) ++ List(pivot) ++ quicksort(xs filter(_ > pivot))
+      quicksort(xs filter( f(_, pivot) ))(f)++ List(pivot) ++ quicksort(xs filter(f(pivot, _) ))(f)
     case _ => lst
   }
 

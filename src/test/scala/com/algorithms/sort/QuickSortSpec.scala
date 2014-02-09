@@ -12,21 +12,21 @@ class QuickSortSpec extends WordSpec with Matchers {
   "Quicksort in place" should {
     "sort an array of integers" in {
       val array = Array(5,3,4,1,2,7,6)
-      qSort1(array, 0, array.length)
+      qSort(array)
 
       array should equal (Array(1,2,3,4,5,6,7))
     }
 
     "sort another array of integers " in {
       val array = Array(1,3,4,5,2,7,6)
-      qSort1(array, 0, array.length)
+      qSort(array)
 
       array should equal (Array(1,2,3,4,5,6,7))
     }
 
     "sort third array of integers " in {
       val array = Array(5,3,4,6,2,7,1)
-      qSort1(array, 0, array.length)
+      qSort(array)
 
       array should equal (Array(1,2,3,4,5,6,7))
     }
@@ -35,7 +35,7 @@ class QuickSortSpec extends WordSpec with Matchers {
   "quicksort functional approach" should {
     " sort a list of integers" in {
       val lst = List(3,4,5,6,8,2,1)
-      val result = quicksort(lst)
+      val result = quicksort[Int](lst)(_<_)
 
       result should equal (List(1,2,3,4,5,6,8))
     }
