@@ -89,4 +89,48 @@ object QuickSort {
     case _ => lst
   }
 
+  /**
+   * An implementation of select. The purpose of this function is to select the k smallest number in the array.
+   * The complexity of this algorithm is 0(n).
+   * example:
+   *  array: [5,3,1,7,6,4]
+   *  k = 2 e.g. find the 3rd minimum number
+   *  result should be: 4
+   * @param array the unsorted array
+   * @param k the k minimum number.
+   * @return the value on order k
+   */
+  def select(array: Array[Int], k : Int): Int  = {
+
+    def rSelect(array: Array[Int], k: Int, start: Int, end: Int): Array[Int] = {
+
+      def partition(array: Array[Int], start: Int, end: Int, pivot: Int): Int = {
+        var i = start +1
+        for ( j <- start + 1 until end) {
+          if (array(j) < pivot) {
+            swap(array, i,j)
+            i +=1
+          }
+        }
+        swap(array, start, i-1)
+        i
+      }
+
+      val pivot = array(0)
+      val pivot_position = partition(array, start, end, pivot)
+      if ( pivot_position > k) {
+         rSelect(array, k, start, pivot_position)
+      } else if (pivot_position < k ) {
+        rSelect(array, k, pivot_position, end)
+      } else {
+        array
+      }
+    }
+
+    val pointer = k-1
+    val resArray = rSelect(array, pointer, 0, array.length)
+    resArray(pointer)
+  }
+
+
 }
