@@ -2,10 +2,11 @@ name := "Basic Algorithms"
 
 version := "1.0"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.11.4"
 
 resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases"
 
-libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "2.0" % "test"
-)
+libraryDependencies ++= Seq {
+	val scalatestV = "2.2.1"
+  "org.scalatest" %% "scalatest" % scalatestV % "test"
+}

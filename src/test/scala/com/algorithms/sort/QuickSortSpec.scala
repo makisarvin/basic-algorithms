@@ -41,4 +41,24 @@ class QuickSortSpec extends WordSpec with Matchers {
     }
   }
 
+  "RSelect "should {
+    val lst = List(2,3,4,2,1,45,6,78,3,6,356,2,646,3,656,7,4,67,56,64,56,7657,2,5,345,6)
+
+    "find the element in 1st order" in {
+      val array = lst.toArray
+      select(array, 1) should equal(1)
+    }
+
+    "find the element in 5th order" in {
+      val array = lst.toArray
+      select(array, 5) should equal(2)
+    }
+
+    "find the element in 10th order" in {
+      val array = lst.toArray
+      select(array, 10) should equal(4)
+    }
+
+  }
+
 }

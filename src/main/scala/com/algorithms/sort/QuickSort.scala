@@ -96,6 +96,10 @@ object QuickSort {
    *  array: [5,3,1,7,6,4]
    *  k = 2 e.g. find the 3rd minimum number
    *  result should be: 4
+   *
+   *  The algorithm performs partition of one part of the array, until the pivot position is the position of the element
+   *  we want. At that time the element is in the correct position even though the rest of the array is unsorted.
+   *
    * @param array the unsorted array
    * @param k the k minimum number.
    * @return the value on order k
@@ -105,7 +109,7 @@ object QuickSort {
     def rSelect(array: Array[Int], k: Int, start: Int, end: Int): Array[Int] = {
 
       def partition(array: Array[Int], start: Int, end: Int, pivot: Int): Int = {
-        var i = start +1
+        var i = start + 1
         for ( j <- start + 1 until end) {
           if (array(j) < pivot) {
             swap(array, i,j)
@@ -117,7 +121,9 @@ object QuickSort {
       }
 
       val pivot = array(0)
+      println(s"""array: ${array.mkString(" ")}, pivot: $pivot, ($start, $end), $k""")
       val pivot_position = partition(array, start, end, pivot)
+      println(s"$pivot_position")
       if ( pivot_position > k) {
          rSelect(array, k, start, pivot_position)
       } else if (pivot_position < k ) {
@@ -127,9 +133,8 @@ object QuickSort {
       }
     }
 
-    val pointer = k-1
-    val resArray = rSelect(array, pointer, 0, array.length)
-    resArray(pointer)
+    val resArray = rSelect(array, k, 0, array.length)
+    resArray(k)
   }
 
 
